@@ -69,12 +69,16 @@ export async function getCurrentConditions({ latitude, longitude }) {
     throw new HttpError(502, 'Azure Maps returned no weather data.', 'weather_unavailable');
   }
 
+  const past24Hour = current.temperatureSummary?.past24Hour;
+
   return {
     observedAt: current.dateTime,
     phrase: current.phrase,
     iconCode: current.iconCode,
     isDayTime: current.isDayTime,
     temperatureC: current.temperature?.value,
+    minTemperatureC: past24Hour?.minimum?.value,
+    maxTemperatureC: past24Hour?.maximum?.value,
     feelsLikeC: current.realFeelTemperature?.value,
     humidityPercent: current.relativeHumidity,
     windSpeedKmh: current.wind?.speed?.value,
