@@ -38,9 +38,10 @@
           &larr; Back
         </button>
         <div id="detail-alert" class="alert alert-danger" role="alert" hidden></div>
-        <div class="card shadow-sm overflow-hidden">
+
+        <div class="card shadow-sm overflow-hidden mb-4">
           <div class="card-body">
-            <h1 id="detail-title" class="h4 card-title mb-1"></h1>
+            <h1 id="detail-title" class="h4 card-title mb-1 d-flex align-items-center gap-2"></h1>
             <p id="detail-subtitle" class="text-body-secondary mb-3"></p>
             <div class="row g-3 align-items-center">
               <div class="col-auto">
@@ -51,18 +52,43 @@
                 <div id="detail-condition" class="text-body-secondary"></div>
               </div>
             </div>
-            <dl class="row mt-3 mb-0">
-              <dt class="col-6 col-sm-4">Min temperature (24h)</dt>
-              <dd class="col-6 col-sm-8" id="detail-min">—</dd>
-              <dt class="col-6 col-sm-4">Max temperature (24h)</dt>
-              <dd class="col-6 col-sm-8" id="detail-max">—</dd>
-              <dt class="col-6 col-sm-4">Feels like</dt>
-              <dd class="col-6 col-sm-8" id="detail-feels-like">—</dd>
-              <dt class="col-6 col-sm-4">Humidity</dt>
-              <dd class="col-6 col-sm-8" id="detail-humidity">—</dd>
-            </dl>
+            <div
+              id="detail-metrics"
+              class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-3 mt-1"
+            ></div>
           </div>
           <div id="detail-map" class="detail-map"></div>
+        </div>
+
+        <div class="card shadow-sm">
+          <div
+            class="card-header bg-body d-flex flex-wrap justify-content-between align-items-center gap-2"
+          >
+            <h2 class="h6 mb-0">Daily forecast</h2>
+            <div class="btn-group btn-group-sm" role="group" aria-label="Forecast range">
+              <input
+                type="radio"
+                class="btn-check"
+                name="forecast-range"
+                id="forecast-range-5"
+                value="5"
+                checked
+              />
+              <label class="btn btn-outline-primary" for="forecast-range-5">5 days</label>
+              <input
+                type="radio"
+                class="btn-check"
+                name="forecast-range"
+                id="forecast-range-7"
+                value="7"
+              />
+              <label class="btn btn-outline-primary" for="forecast-range-7">7 days</label>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="forecast-alert" class="alert alert-warning" role="alert" hidden></div>
+            <div id="forecast-list" class="row g-3"></div>
+          </div>
         </div>
       </section>
 

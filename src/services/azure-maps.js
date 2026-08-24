@@ -80,12 +80,65 @@ export async function getCurrentConditions({ latitude, longitude }) {
     minTemperatureC: past24Hour?.minimum?.value,
     maxTemperatureC: past24Hour?.maximum?.value,
     feelsLikeC: current.realFeelTemperature?.value,
+    dewPointC: current.dewPoint?.value,
     humidityPercent: current.relativeHumidity,
     windSpeedKmh: current.wind?.speed?.value,
     windDirection: current.wind?.direction?.localizedDescription,
+    windGustKmh: current.windGust?.speed?.value,
     uvIndex: current.uvIndex,
     uvIndexPhrase: current.uvIndexPhrase,
+    cloudCoverPercent: current.cloudCover,
     pressureMb: current.pressure?.value,
-    visibilityKm: current.visibility?.value
+    visibilityKm: current.visibility?.value,
+    precipitationPastHourMm: current.precipitationSummary?.pastHour?.value
   };
+}
+
+// Azure Maps only accepts a fixed set of forecast durations, so request the
+// smallest one that covers the requested number of days and trim the rest.
+const SUPPORTED_DURATIONS = [1, 5, 10, 15];
+
+export const MAX_FORECAST_DAYS = 15;
+
+function mapDailyForecast(entry) {
+  const day = entry.day ?? {};
+  const uv = entry.airAndPollen?.find((item) => item.name === 'UVIndex');
+
+  return {
+    date: entry.date,
+    minTemperatureC: entry.temperature?.minimum?.value,
+    maxTemperatureC: entry.temperature?.maximum?.value,
+    feelsLikeMinC: entry.realFeelTemperature?.minimum?.value,
+    feelsLikeMaxC: entry.realFeelTemperature?.maximum?.value,
+    iconCode: day.iconCode,
+    phrase: day.iconPhrase ?? day.shortPhrase,
+    longPhrase: day.longPhrase,
+    precipitationProbability: day.precipitationProbability,
+    precipitationMm: day.totalLiquid?.value,
+    hoursOfPrecipitation: day.hoursOfPrecipitation,
+    windSpeedKmh: day.wind?.speed?.value,
+    windDirection: day.wind?.direction?.localizedDescription,
+    windGustKmh: day.windGust?.speed?.value,
+    cloudCoverPercent: day.cloudCover,
+    hoursOfSun: entry.hoursOfSun,
+    uvIndex: uv?.value,
+    uvIndexPhrase: uv?.category
+  };
+}
+
+export async function getDailyForecast({ latitude, longitude }, days) {
+  const duration = SUPPORTED_DURATIONS.find((value) => value >= days) ?? MAX_FORECAST_DAYS;
+
+  const data = await callAzureMaps('/weather/forecast/daily/json', {
+    'api-version': '1.1',
+    query: `${latitude},${longitude}`,
+    unit: 'metric',
+    duration: String(duration)
+  });
+
+  if (!Array.isArray(data?.forecasts) || data.forecasts.length === 0) {
+    throw new HttpError(502, 'Azure Maps returned no forecast data.', 'forecast_unavailable');
+  }
+
+  return data.forecasts.slice(0, days).map(mapDailyForecast);
 }
