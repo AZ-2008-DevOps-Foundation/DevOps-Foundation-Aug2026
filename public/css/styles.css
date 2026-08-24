@@ -15,8 +15,30 @@
 }
 
 .country-flag {
-  font-size: 1.75rem;
+  width: 2rem;
+  height: 1.5rem;
+  object-fit: cover;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+  flex: 0 0 auto;
+}
+
+.country-flag-sm {
+  width: 1.5rem;
+  height: 1.125rem;
+}
+
+.metric-card .fs-5 {
+  font-weight: 500;
+}
+
+.forecast-card .forecast-emoji {
+  font-size: 2rem;
   line-height: 1;
+}
+
+.forecast-details dt {
+  font-weight: 400;
 }
 
 .detail-map {
