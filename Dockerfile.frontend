@@ -1,0 +1,15 @@
+# syntax=docker/dockerfile:1
+
+FROM node:24-alpine AS build
+WORKDIR /build
+COPY public ./site
+# Fail early if the static bundle is incomplete.
+RUN test -s ./site/index.html && test -s ./site/js/app.js && test -s ./site/css/styles.css
+
+FROM nginxinc/nginx-unprivileged:1.27-alpine AS runtime
+ENV PORT=8080 \
+    BACKEND_URL=http://backend:3000 \
+    DNS_RESOLVER=168.63.129.16
+COPY --from=build /build/site /usr/share/nginx/html
+COPY docker/nginx/default.conf.template /etc/nginx/templates/default.conf.template
+EXPOSE 8080
