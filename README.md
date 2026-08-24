@@ -1,4 +1,4 @@
-[![CI](https://github.com/AZ-2008-DevOps-Foundation/DevOps-Foundation-Aug2026/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/AZ-2008-DevOps-Foundation/DevOps-Foundation-Aug2026/actions/workflows/ci.yml) [![CD](https://github.com/AZ-2008-DevOps-Foundation/DevOps-Foundation-Aug2026/actions/workflows/cd.yml/badge.svg?branch=main)](https://github.com/AZ-2008-DevOps-Foundation/DevOps-Foundation-Aug2026/actions/workflows/cd.yml)
+[![CI](https://github.com/AZ-2008-DevOps-Foundation/DevOps-Foundation-Aug2026/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/AZ-2008-DevOps-Foundation/DevOps-Foundation-Aug2026/actions/workflows/ci.yml)
 
 # DevOps Foundation — Weather Dashboard
 
