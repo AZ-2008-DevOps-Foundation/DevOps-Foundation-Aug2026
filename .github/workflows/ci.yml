@@ -98,3 +98,13 @@ jobs:
             echo "::error::CodeQL analysis did not pass."
             exit 1
           fi
+
+  deploy:
+    name: Deploy
+    needs: [ci]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/cd.yml
+    secrets: inherit
