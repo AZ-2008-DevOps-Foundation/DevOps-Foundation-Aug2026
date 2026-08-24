@@ -53,21 +53,48 @@ jobs:
         env:
           AZURE_MAPS_KEY: ${{ secrets.AZURE_MAPS_KEY }}
 
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          queries: security-extended
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:javascript-typescript
+
   ci:
     name: CI
     runs-on: ubuntu-latest
-    needs: [backend-tests, frontend-tests]
+    needs: [backend-tests, frontend-tests, codeql]
     if: always()
     steps:
-      # Single required status check to point branch protection at.
-      - name: Verify test jobs succeeded
+      # Single required status check; packaging/deploy jobs should use `needs: [ci]`.
+      - name: Verify test and security jobs succeeded
         env:
           BACKEND: ${{ needs.backend-tests.result }}
           FRONTEND: ${{ needs.frontend-tests.result }}
+          CODEQL: ${{ needs.codeql.result }}
         run: |
           echo "backend-tests: $BACKEND"
           echo "frontend-tests: $FRONTEND"
+          echo "codeql: $CODEQL"
           if [ "$BACKEND" != "success" ] || [ "$FRONTEND" != "success" ]; then
             echo "::error::Unit tests did not pass."
+            exit 1
+          fi
+          if [ "$CODEQL" != "success" ]; then
+            echo "::error::CodeQL analysis did not pass."
             exit 1
           fi
