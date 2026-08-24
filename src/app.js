@@ -1,7 +1,10 @@
 import cors from 'cors';
 import express from 'express';
+import { fileURLToPath } from 'node:url';
 import { HttpError } from './http-error.js';
 import { router as apiRouter } from './routes/api.js';
+
+const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
 
 export function createApp() {
   const app = express();
@@ -12,6 +15,7 @@ export function createApp() {
 
   app.get('/health', (_req, res) => res.json({ status: 'ok' }));
   app.use('/api', apiRouter);
+  app.use(express.static(publicDir));
 
   app.use((_req, _res, next) => {
     next(new HttpError(404, 'Route not found.', 'not_found'));

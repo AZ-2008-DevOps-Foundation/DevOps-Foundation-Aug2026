@@ -1,4 +1,4 @@
-// Reference data for the three demo locations. Coordinates are fallbacks/display
+// Reference data for the demo locations. Coordinates are fallbacks/display
 // values only - live lookups still go through the Azure Maps Search API.
 export const CITIES = [
   {
@@ -27,6 +27,24 @@ export const CITIES = [
     flag: '🇮🇳',
     coordinates: { latitude: 19.076, longitude: 72.8777 },
     timezone: 'Asia/Kolkata'
+  },
+  {
+    id: 'manila-ph',
+    city: 'Manila',
+    country: 'Philippines',
+    countryCode: 'PH',
+    flag: '🇵🇭',
+    coordinates: { latitude: 14.5995, longitude: 120.9842 },
+    timezone: 'Asia/Manila'
+  },
+  {
+    id: 'cebu-ph',
+    city: 'Cebu',
+    country: 'Philippines',
+    countryCode: 'PH',
+    flag: '🇵🇭',
+    coordinates: { latitude: 10.3157, longitude: 123.8854 },
+    timezone: 'Asia/Manila'
   }
 ];
 

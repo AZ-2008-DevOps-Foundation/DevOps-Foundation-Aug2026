@@ -1,0 +1,31 @@
+.city-card {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.city-card:hover,
+.city-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.city-card .weather-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.country-flag {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.detail-map {
+  height: 320px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .detail-map {
+    height: 420px;
+  }
+}
