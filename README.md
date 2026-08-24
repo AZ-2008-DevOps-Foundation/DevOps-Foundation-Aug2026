@@ -2,6 +2,8 @@
 
 # DevOps Foundation — Weather Dashboard
 
+> 📘 New to the course? Start with the [**Student Recap & Notes**](docs/student-recap.md) — a summary of the concepts covered in the instructor-led session.
+
 A hands-on reference repository for **AZ-2008 DevOps Foundation**. It uses one small Node.js web app to walk through the whole delivery loop: plan work on GitHub → branch → pull request → automated tests → security scan → container build → deploy to Azure.
 
 The app itself is deliberately simple so the DevOps practices stay in focus.
