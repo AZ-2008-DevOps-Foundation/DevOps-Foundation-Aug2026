@@ -21,7 +21,7 @@ jobs:
       NAME_PREFIX: ${{ vars.AZURE_NAME_PREFIX || 'weather' }}
       IMAGE_TAG: ${{ github.sha }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Resolve image prefix
         id: images
